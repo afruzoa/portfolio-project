@@ -17,9 +17,10 @@ h6 {
   font-weight: bold;
   color: black;
   margin: 0;
+  text-align: center;
 }
 h2 {
-  font-size: 64px;
+  font-size: 48px;
 }
 p {
   font-weight: normal;
@@ -38,7 +39,7 @@ p {
   color: #272142;
 }
 h1 {
-  font-size: 96px;
+  font-size: 60px;
 }
 .hero h2 {
   font-size: 24px;
@@ -104,4 +105,27 @@ h1 {
 }
 .img-fluid {
   max-width: 75%;
+}
+.txt {
+  font-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.contact {
+  text-align: center;
+  font-weight: bold;
+}
+.row {
+  text-align: center;
+}
+.header h1 {
+  font-size: 69px;
+}
+.contact-box {
+  padding: 30px 120px;
+  justify-content: center;
+}
+.social-links a {
+  margin: 0 20px;
+  padding: 10px 14px;
 }
