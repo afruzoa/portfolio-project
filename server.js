@@ -1,34 +1,25 @@
-const http = require("http");
+const express = require("express");
 const path = require("path");
-const { lookup } = require("mime-types");
-const { readFile, stat, readdir } = require("fs/promises");
-const server = http.createServer(async (req, res) => {
-  const baseDir = path.join(__dirname, "Public");
-  const pagesDir = path.join(baseDir, "Pages");
-  try {
-    const htmlFiles = await readdir(pagesDir);
-    const url = req.url === "/" ? "/index" : req.url;
-    const matchedFile = htmlFiles.find(
-      (file) => url === `/${path.basename(file, ".html")}`
-    );
-    let filePath;
-    if (matchedFile) {
-      filePath = path.join(pagesDir, matchedFile);
-    } else {
-      filePath = path.join(baseDir, req.url);
-    }
-    await stat(filePath);
-    const mimeType = lookup(filePath) || "application/octet-stream";
-    const content = await readFile(filePath);
-    res.writeHead(200, { "Content-Type": mimeType });
-    res.end(content);
-  } catch (error) {
-    console.error(`Error handling request: ${error.message}`);
-    res.writeHead(500, { "Content-Type": "text/html" });
-    res.end("<h1>Internal Server Error</h1>");
-  }
+const app = express();
+const PORT = 5000;
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Public/Pages/index.html"));
 });
-const PORT = 4000;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Public/Pages/about.html"));
+});
+app.get("/contact", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Public/Pages/contact.html"));
+});
+app.get("/work", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Public/Pages/work.html"));
+});
+app.use(express.static('./Public/src'))
+
+app.all("*", (req, res) => {
+  res.status(404).send("resource not found");
+});
+app.listen(5000, "localhost", () => {
+  console.log(`Server is listening on http://localhost:${PORT}`);
 });
